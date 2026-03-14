@@ -1,0 +1,519 @@
+   Compiling gudev16 v0.1.0 (/Users/zakgrivell/dev/gudev16)
+error[E0425]: cannot find type `ChildBuilder` in this scope
+   --> src/main.rs:211:30
+    |
+211 | fn spawn_topbar(parent: &mut ChildBuilder) {
+    |                              ^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `ChildBuilder` in this scope
+   --> src/main.rs:257:29
+    |
+257 | fn spawn_badge(parent: &mut ChildBuilder, label: &str, color: Color) {
+    |                             ^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `ChildBuilder` in this scope
+   --> src/main.rs:282:31
+    |
+282 | fn spawn_tab_bar(parent: &mut ChildBuilder) {
+    |                               ^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `ChildBuilder` in this scope
+   --> src/main.rs:305:34
+    |
+305 | fn spawn_tab_button(parent: &mut ChildBuilder, tab: ActiveTab) {
+    |                                  ^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `ChildBuilder` in this scope
+   --> src/main.rs:352:36
+    |
+352 | fn spawn_content_area(parent: &mut ChildBuilder) {
+    |                                    ^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `ChildBuilder` in this scope
+   --> src/main.rs:373:39
+    |
+373 | fn spawn_dashboard_panel(parent: &mut ChildBuilder) {
+    |                                       ^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `ChildBuilder` in this scope
+   --> src/main.rs:451:33
+    |
+451 | fn spawn_stat_card(parent: &mut ChildBuilder, label: &str, value: &str, accent: Color) {
+    |                                 ^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `ChildBuilder` in this scope
+   --> src/main.rs:486:28
+    |
+486 | fn spawn_card(parent: &mut ChildBuilder, title: &str, children_fn: impl FnOnce(&mut ChildBuilder)) {
+    |                            ^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `ChildBuilder` in this scope
+   --> src/main.rs:486:85
+    |
+486 | fn spawn_card(parent: &mut ChildBuilder, title: &str, children_fn: impl FnOnce(&mut ChildBuilder)) {
+    |                                                                                     ^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `ChildBuilder` in this scope
+   --> src/main.rs:516:38
+    |
+516 | fn spawn_settings_panel(parent: &mut ChildBuilder) {
+    |                                      ^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `ChildBuilder` in this scope
+   --> src/main.rs:562:35
+    |
+562 | fn spawn_setting_row(parent: &mut ChildBuilder, label: &str, value: &str) {
+    |                                   ^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `ChildBuilder` in this scope
+   --> src/main.rs:602:35
+    |
+602 | fn spawn_stats_panel(parent: &mut ChildBuilder) {
+    |                                   ^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `ChildBuilder` in this scope
+   --> src/main.rs:652:31
+    |
+652 | fn spawn_bar_row(parent: &mut ChildBuilder, label: &str, pct: f32, color: Color) {
+    |                               ^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `ChildBuilder` in this scope
+   --> src/main.rs:716:35
+    |
+716 | fn spawn_about_panel(parent: &mut ChildBuilder) {
+    |                                   ^^^^^^^^^^^^ not found in this scope
+
+error[E0277]: the trait bound `WindowResolution: From<({float}, {float})>` is not satisfied
+    --> src/main.rs:175:44
+     |
+ 175 |                 resolution: (900.0, 620.0).into(),
+     |                                            ^^^^ the trait `From<({float}, {float})>` is not implemented for `WindowResolution`
+     |
+help: the following other types implement trait `From<T>`
+    --> /Users/zakgrivell/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_window-0.18.1/src/window.rs:1033:1
+     |
+1033 | impl From<(u32, u32)> for WindowResolution {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `WindowResolution` implements `From<(u32, u32)>`
+...
+1039 | impl From<[u32; 2]> for WindowResolution {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `WindowResolution` implements `From<[u32; 2]>`
+...
+1045 | impl From<UVec2> for WindowResolution {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `WindowResolution` implements `From<UVec2>`
+     = note: required for `({float}, {float})` to implement `Into<WindowResolution>`
+
+error[E0423]: expected function, tuple struct or tuple variant, found struct `BorderColor`
+    --> src/main.rs:223:13
+     |
+ 223 |             BorderColor(BORDER_SUBTLE),
+     |             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+    ::: /Users/zakgrivell/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ui-0.18.1/src/ui_node.rs:2242:1
+     |
+2242 | pub struct BorderColor {
+     | ---------------------- `BorderColor` defined here
+     |
+help: use struct literal syntax instead
+     |
+ 223 -             BorderColor(BORDER_SUBTLE),
+ 223 +             BorderColor { top: val, right: val, bottom: val, left: val },
+     |
+help: you might have meant to use the `all` associated function
+     |
+ 223 |             BorderColor::all(BORDER_SUBTLE),
+     |                        +++++
+
+error[E0282]: type annotations needed
+   --> src/main.rs:225:25
+    |
+225 |         .with_children(|bar| {
+    |                         ^^^
+226 |             // Logo dot
+227 |             bar.spawn((
+    |             --- type must be known at this point
+    |
+help: consider giving this closure parameter an explicit type
+    |
+225 |         .with_children(|bar: /* Type */| {
+    |                            ++++++++++++
+
+error[E0282]: type annotations needed
+   --> src/main.rs:268:25
+    |
+268 |         .with_children(|b| {
+    |                         ^
+269 |             b.spawn((
+    |             - type must be known at this point
+    |
+help: consider giving this closure parameter an explicit type
+    |
+268 |         .with_children(|b: /* Type */| {
+    |                          ++++++++++++
+
+error[E0423]: expected function, tuple struct or tuple variant, found struct `BorderColor`
+    --> src/main.rs:296:13
+     |
+ 296 |             BorderColor(BORDER_SUBTLE),
+     |             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+    ::: /Users/zakgrivell/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ui-0.18.1/src/ui_node.rs:2242:1
+     |
+2242 | pub struct BorderColor {
+     | ---------------------- `BorderColor` defined here
+     |
+help: use struct literal syntax instead
+     |
+ 296 -             BorderColor(BORDER_SUBTLE),
+ 296 +             BorderColor { top: val, right: val, bottom: val, left: val },
+     |
+help: you might have meant to use the `all` associated function
+     |
+ 296 |             BorderColor::all(BORDER_SUBTLE),
+     |                        +++++
+
+error[E0423]: expected function, tuple struct or tuple variant, found struct `BorderColor`
+    --> src/main.rs:327:13
+     |
+ 327 | /             BorderColor(if is_active {
+ 328 | |                 BORDER_SUBTLE
+ 329 | |             } else {
+ 330 | |                 Color::NONE
+ 331 | |             }),
+     | |______________^
+     |
+    ::: /Users/zakgrivell/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ui-0.18.1/src/ui_node.rs:2242:1
+     |
+2242 |   pub struct BorderColor {
+     |   ---------------------- `BorderColor` defined here
+     |
+help: use struct literal syntax instead
+     |
+ 327 -             BorderColor(if is_active {
+ 328 -                 BORDER_SUBTLE
+ 329 -             } else {
+ 330 -                 Color::NONE
+ 331 -             }),
+ 327 +             BorderColor { top: val, right: val, bottom: val, left: val },
+     |
+help: you might have meant to use the `all` associated function
+     |
+ 327 |             BorderColor::all(if is_active {
+     |                        +++++
+
+error[E0282]: type annotations needed
+   --> src/main.rs:333:25
+    |
+333 |         .with_children(|btn| {
+    |                         ^^^
+334 |             btn.spawn((
+    |             --- type must be known at this point
+    |
+help: consider giving this closure parameter an explicit type
+    |
+333 |         .with_children(|btn: /* Type */| {
+    |                            ++++++++++++
+
+error[E0282]: type annotations needed
+   --> src/main.rs:386:25
+    |
+386 |         .with_children(|panel| {
+    |                         ^^^^^
+387 |             panel.spawn((
+    |             ----- type must be known at this point
+    |
+help: consider giving this closure parameter an explicit type
+    |
+386 |         .with_children(|panel: /* Type */| {
+    |                              ++++++++++++
+
+error[E0282]: type annotations needed
+   --> src/main.rs:409:51
+    |
+409 |             spawn_card(panel, "Recent Activity", |card| {
+    |                                                   ^^^^
+...
+417 |                     card.spawn((
+    |                     ---- type must be known at this point
+    |
+help: consider giving this closure parameter an explicit type
+    |
+409 |             spawn_card(panel, "Recent Activity", |card: /* Type */| {
+    |                                                       ++++++++++++
+
+error[E0423]: expected function, tuple struct or tuple variant, found struct `BorderColor`
+    --> src/main.rs:426:25
+     |
+ 426 |                         BorderColor(BORDER_SUBTLE),
+     |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+    ::: /Users/zakgrivell/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ui-0.18.1/src/ui_node.rs:2242:1
+     |
+2242 | pub struct BorderColor {
+     | ---------------------- `BorderColor` defined here
+     |
+help: use struct literal syntax instead
+     |
+ 426 -                         BorderColor(BORDER_SUBTLE),
+ 426 +                         BorderColor { top: val, right: val, bottom: val, left: val },
+     |
+help: you might have meant to use the `all` associated function
+     |
+ 426 |                         BorderColor::all(BORDER_SUBTLE),
+     |                                    +++++
+
+error[E0282]: type annotations needed
+   --> src/main.rs:428:37
+    |
+428 |                     .with_children(|row| {
+    |                                     ^^^
+429 |                         row.spawn((
+    |                         --- type must be known at this point
+    |
+help: consider giving this closure parameter an explicit type
+    |
+428 |                     .with_children(|row: /* Type */| {
+    |                                        ++++++++++++
+
+error[E0423]: expected function, tuple struct or tuple variant, found struct `BorderColor`
+    --> src/main.rs:464:13
+     |
+ 464 |             BorderColor(BORDER_SUBTLE),
+     |             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+    ::: /Users/zakgrivell/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ui-0.18.1/src/ui_node.rs:2242:1
+     |
+2242 | pub struct BorderColor {
+     | ---------------------- `BorderColor` defined here
+     |
+help: use struct literal syntax instead
+     |
+ 464 -             BorderColor(BORDER_SUBTLE),
+ 464 +             BorderColor { top: val, right: val, bottom: val, left: val },
+     |
+help: you might have meant to use the `all` associated function
+     |
+ 464 |             BorderColor::all(BORDER_SUBTLE),
+     |                        +++++
+
+error[E0282]: type annotations needed
+   --> src/main.rs:466:25
+    |
+466 |         .with_children(|card| {
+    |                         ^^^^
+467 |             card.spawn((
+    |             ---- type must be known at this point
+    |
+help: consider giving this closure parameter an explicit type
+    |
+466 |         .with_children(|card: /* Type */| {
+    |                             ++++++++++++
+
+error[E0423]: expected function, tuple struct or tuple variant, found struct `BorderColor`
+    --> src/main.rs:499:13
+     |
+ 499 |             BorderColor(BORDER_SUBTLE),
+     |             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+    ::: /Users/zakgrivell/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ui-0.18.1/src/ui_node.rs:2242:1
+     |
+2242 | pub struct BorderColor {
+     | ---------------------- `BorderColor` defined here
+     |
+help: use struct literal syntax instead
+     |
+ 499 -             BorderColor(BORDER_SUBTLE),
+ 499 +             BorderColor { top: val, right: val, bottom: val, left: val },
+     |
+help: you might have meant to use the `all` associated function
+     |
+ 499 |             BorderColor::all(BORDER_SUBTLE),
+     |                        +++++
+
+error[E0282]: type annotations needed
+   --> src/main.rs:501:25
+    |
+501 |         .with_children(|card| {
+    |                         ^^^^
+502 |             card.spawn((
+    |             ---- type must be known at this point
+    |
+help: consider giving this closure parameter an explicit type
+    |
+501 |         .with_children(|card: /* Type */| {
+    |                             ++++++++++++
+
+error[E0282]: type annotations needed
+   --> src/main.rs:529:25
+    |
+529 |         .with_children(|panel| {
+    |                         ^^^^^
+530 |             panel.spawn((
+    |             ----- type must be known at this point
+    |
+help: consider giving this closure parameter an explicit type
+    |
+529 |         .with_children(|panel: /* Type */| {
+    |                              ++++++++++++
+
+error[E0423]: expected function, tuple struct or tuple variant, found struct `BorderColor`
+    --> src/main.rs:572:13
+     |
+ 572 |             BorderColor(BORDER_SUBTLE),
+     |             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+    ::: /Users/zakgrivell/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ui-0.18.1/src/ui_node.rs:2242:1
+     |
+2242 | pub struct BorderColor {
+     | ---------------------- `BorderColor` defined here
+     |
+help: use struct literal syntax instead
+     |
+ 572 -             BorderColor(BORDER_SUBTLE),
+ 572 +             BorderColor { top: val, right: val, bottom: val, left: val },
+     |
+help: you might have meant to use the `all` associated function
+     |
+ 572 |             BorderColor::all(BORDER_SUBTLE),
+     |                        +++++
+
+error[E0282]: type annotations needed
+   --> src/main.rs:574:25
+    |
+574 |         .with_children(|row| {
+    |                         ^^^
+575 |             row.spawn(Node {
+    |             --- type must be known at this point
+    |
+help: consider giving this closure parameter an explicit type
+    |
+574 |         .with_children(|row: /* Type */| {
+    |                            ++++++++++++
+
+error[E0282]: type annotations needed
+   --> src/main.rs:579:29
+    |
+579 |             .with_children(|l| {
+    |                             ^
+580 |                 l.spawn((
+    |                 - type must be known at this point
+    |
+help: consider giving this closure parameter an explicit type
+    |
+579 |             .with_children(|l: /* Type */| {
+    |                              ++++++++++++
+
+error[E0282]: type annotations needed
+   --> src/main.rs:615:25
+    |
+615 |         .with_children(|panel| {
+    |                         ^^^^^
+616 |             panel.spawn((
+    |             ----- type must be known at this point
+    |
+help: consider giving this closure parameter an explicit type
+    |
+615 |         .with_children(|panel: /* Type */| {
+    |                              ++++++++++++
+
+error[E0282]: type annotations needed
+   --> src/main.rs:660:25
+    |
+660 |         .with_children(|col| {
+    |                         ^^^
+661 |             col.spawn(Node {
+    |             --- type must be known at this point
+    |
+help: consider giving this closure parameter an explicit type
+    |
+660 |         .with_children(|col: /* Type */| {
+    |                            ++++++++++++
+
+error[E0282]: type annotations needed
+   --> src/main.rs:665:29
+    |
+665 |             .with_children(|row| {
+    |                             ^^^
+666 |                 row.spawn(Node {
+    |                 --- type must be known at this point
+    |
+help: consider giving this closure parameter an explicit type
+    |
+665 |             .with_children(|row: /* Type */| {
+    |                                ++++++++++++
+
+error[E0282]: type annotations needed
+   --> src/main.rs:670:33
+    |
+670 |                 .with_children(|l| {
+    |                                 ^
+671 |                     l.spawn((
+    |                     - type must be known at this point
+    |
+help: consider giving this closure parameter an explicit type
+    |
+670 |                 .with_children(|l: /* Type */| {
+    |                                  ++++++++++++
+
+error[E0282]: type annotations needed
+   --> src/main.rs:700:29
+    |
+700 |             .with_children(|track| {
+    |                             ^^^^^
+701 |                 track.spawn((
+    |                 ----- type must be known at this point
+    |
+help: consider giving this closure parameter an explicit type
+    |
+700 |             .with_children(|track: /* Type */| {
+    |                                  ++++++++++++
+
+error[E0282]: type annotations needed
+   --> src/main.rs:729:25
+    |
+729 |         .with_children(|panel| {
+    |                         ^^^^^
+730 |             panel.spawn((
+    |             ----- type must be known at this point
+    |
+help: consider giving this closure parameter an explicit type
+    |
+729 |         .with_children(|panel: /* Type */| {
+    |                              ++++++++++++
+
+error[E0282]: type annotations needed
+   --> src/main.rs:752:43
+    |
+752 |             spawn_card(panel, "Credits", |card| {
+    |                                           ^^^^
+753 |                 card.spawn((
+    |                 ---- type must be known at this point
+    |
+help: consider giving this closure parameter an explicit type
+    |
+752 |             spawn_card(panel, "Credits", |card: /* Type */| {
+    |                                               ++++++++++++
+
+error[E0423]: expected function, tuple struct or tuple variant, found struct `BorderColor`
+    --> src/main.rs:809:19
+     |
+ 809 |         *border = BorderColor(if active { BORDER_SUBTLE } else { Color::NONE });
+     |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+    ::: /Users/zakgrivell/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_ui-0.18.1/src/ui_node.rs:2242:1
+     |
+2242 | pub struct BorderColor {
+     | ---------------------- `BorderColor` defined here
+     |
+help: use struct literal syntax instead
+     |
+ 809 -         *border = BorderColor(if active { BORDER_SUBTLE } else { Color::NONE });
+ 809 +         *border = BorderColor { top: val, right: val, bottom: val, left: val };
+     |
+help: you might have meant to use the `all` associated function
+     |
+ 809 |         *border = BorderColor::all(if active { BORDER_SUBTLE } else { Color::NONE });
+     |                              +++++
+
+Some errors have detailed explanations: E0277, E0282, E0423, E0425.
+For more information about an error, try `rustc --explain E0277`.
+error: could not compile `gudev16` (bin "gudev16") due to 41 previous errors

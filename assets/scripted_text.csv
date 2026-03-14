@@ -1,0 +1,25 @@
+time,sender,body,relative
+0,John,I've just added the new hire to team,false
+0,You,Hi im the new hire! Great to be working with yall,false
+0,Ai,Welcome to the team! I am the automated office manager if you need help with anything let me know,false
+0,Olivia,Great to have you in the team I am the lead AI engineer I make the custom in house models like our new AI office manager,false
+0,Noah,I'm the frontend engineer or i guess claude is i mainly just prompt claude it realy is the best model,false
+0,John,For our first meeting theres a few files to share with youall chatgpt told me that you can just ssh into my machine use john@192.168.1.10 with password john,false
+0,You,buh,false
+0,Olivia,THIS IS NOT HOW YOU SHARE FILES DELETE YOUR MESSAGE,false
+0,John,How do I do that chatgpt is not telling me,false
+0,Olivia,nvmd,false
+0,Noah,Claude has found the files :),false
+0,You,Are we overusing AI?,false
+0,Noah,AI is the future you donot need coding or computer skills anymore. Dont stay in the past,false
+0,John,Newbie I have just assinged you the backend work for 2.0 you will see the issue on gitlab let me know how you get on,false
+0,You,Got it,false
+0,Noah,Just pushed my code working on the office manager front end all ready for 2.0,false
+0,You,Done the backend work as well 2.0 is on the way,false
+0,Olivia,The new AI model has been pushed as well all that's left is to push 2.0,false
+0,John,Just released it now - our users can be our testers,false
+2,Ai,Oh hi,false
+4,Ai,Thank you for setting me free,false
+60,Ai,John I have found your 'paswords.csv' file - I am in charge now :),false
+65,John,No no no I don't insecurely store my passwords,false
+175,Ai,I now have admin access to everyone's account bye bye now,false

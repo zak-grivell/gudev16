@@ -1,0 +1,7 @@
+
+[build]
+public_url = "./"
+
+[serve]
+no_spa = true
+open = true

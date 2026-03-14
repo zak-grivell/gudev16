@@ -1,0 +1,17 @@
+
+<html>
+  <head>
+    
+<script type="module">
+import init, * as bindings from './gudev16-46077bb8f32e2a85.js';
+const wasm = await init({ module_or_path: './gudev16-46077bb8f32e2a85_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
+  <link rel="modulepreload" href="./gudev16-46077bb8f32e2a85.js" crossorigin="anonymous" integrity="sha384-wkuyaWyCFWeJxLTi62wGJFqmHAKmCBasMNuYNlpm5egUB06wBXEfY5WOqsUty5cJ"><link rel="preload" href="./gudev16-46077bb8f32e2a85_bg.wasm" crossorigin="anonymous" integrity="sha384-vb4vQ1ZamGmUQGMRLkl+UwSesvMzvw4CVmuncc801weZYI7WuYCjg1tzB2rgiyZ6" as="fetch" type="application/wasm"></head>
+</html>
