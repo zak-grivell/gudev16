@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-bevy = { version = "0.18.1", features = ["debug"] }
+bevy = { version = "0.18.1", features = ["debug", "2d"] }
 bevy_common_assets = { version = "0.15.0", features = ["csv"] }
 catppuccin = { version = "2.7.0" }
 serde = "1.0.228"
@@ -16,3 +16,17 @@ opt-level = 1
 # Enable a large amount of optimization in the dev profile for dependencies.
 [profile.dev.package."*"]
 opt-level = 3
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+wasm-bindgen = { version = "0.2.100" }
+serde-wasm-bindgen = { version = "0.6.5" }
+web-sys = { version = "0.3", features = [
+    "HtmlCanvasElement",
+    "WebGl2RenderingContext",
+    "Window",
+] }
+
+[lints.clippy]
+too_many_arguments = "allow"
+type_complexity = "allow"
+nonstandard_macro_braces = "warn"

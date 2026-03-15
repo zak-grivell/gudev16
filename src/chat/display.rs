@@ -529,13 +529,19 @@ fn send_scroll_events(
 fn auto_scroll_to_bottom(
     state: Res<ChatState>,
     mut scroll_query: Query<(&mut ScrollPosition, &ComputedNode), With<ScrollContainer>>,
+    mut run_next: Local<i32>,
 ) {
-    if !state.is_changed() {
-        return;
+    if state.is_changed() {
+        *run_next += 10;
     }
-    if let Ok((mut pos, computed)) = scroll_query.single_mut() {
-        let max = computed.size().y * computed.inverse_scale_factor;
 
-        pos.y = max.max(0.0);
+    if *run_next > 0
+        && let Ok((mut pos, computed)) = scroll_query.single_mut()
+    {
+        *run_next -= 1;
+        let max_offset =
+            (computed.content_size() - computed.size()) * computed.inverse_scale_factor();
+
+        pos.y = max_offset.y;
     }
 }

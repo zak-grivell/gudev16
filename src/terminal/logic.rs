@@ -1,18 +1,17 @@
-use std::rc::Rc;
-
 use bevy::{
     input::{
         ButtonState,
         keyboard::{Key, KeyboardInput},
     },
-    platform::collections::HashMap,
+    platform::collections::HashSet,
     prelude::*,
 };
 
 use crate::{
     chat::logic::ChatMessage,
     terminal::{display::TerminalWindow, tree::Tree},
-    timer::TimeUp,
+    timer::{ConnectionState, TimeUp},
+    win::WinState,
     window::Focused,
 };
 
@@ -32,15 +31,29 @@ pub struct TerminalLine {
     pub text: String,
 }
 
+#[derive(Eq, PartialEq, Hash)]
+pub enum PrevCommands {
+    GitRevertCorrect,
+    GitRevertWrong,
+}
+
+#[derive(Eq, PartialEq, Hash, Clone)]
+pub enum IsSsh {
+    Yes(String),
+    No,
+}
+
 #[derive(Resource)]
 pub struct Terminal {
     pub lines: Vec<TerminalLine>,
+    pub prev_inputs: HashSet<PrevCommands>,
     pub input: String,
     pub cursor_pos: usize,
     pub scroll_offset: usize,
     pub cwd: String,
     pub user: String,
     pub hostname: String,
+    pub is_ssh: IsSsh,
 }
 
 impl Default for Terminal {
@@ -48,11 +61,13 @@ impl Default for Terminal {
         let mut t = Self {
             lines: Vec::new(),
             input: String::new(),
+            prev_inputs: HashSet::new(),
             cursor_pos: 0,
             scroll_offset: 0,
             cwd: "/".into(),
-            user: "user".into(),
+            user: "newbie".into(),
             hostname: "ai-sas".into(),
+            is_ssh: IsSsh::No,
         };
 
         // Boot messages
@@ -71,6 +86,23 @@ impl Terminal {
         self.scroll_to_bottom();
     }
 
+    fn do_ssh(&mut self, tree: &mut ResMut<Tree>) {
+        match self.is_ssh.clone() {
+            IsSsh::Yes(prev) => {
+                self.is_ssh = IsSsh::No;
+                self.cwd = prev.clone();
+                self.user = "newbie".into();
+                **tree = Tree::default();
+            }
+            IsSsh::No => {
+                self.is_ssh = IsSsh::Yes(self.cwd.clone());
+                self.cwd = "/".into();
+                self.user = "john".into();
+                **tree = Tree::john_tree();
+            }
+        }
+    }
+
     fn scroll_to_bottom(&mut self) {
         self.scroll_offset = 0;
     }
@@ -83,6 +115,7 @@ impl Terminal {
 pub enum Item {
     File(&'static str),
     Directory(&'static str),
+    UnAuth,
 }
 
 #[derive(Message)]
@@ -191,12 +224,15 @@ fn handle_keyboard(
         }
     }
 }
+
 fn command_handler(
     mut term: ResMut<Terminal>,
     mut command_recive: MessageReader<Command>,
     mut chat_send: MessageWriter<ChatMessage>,
     // mut dir: ResMut<CurrentDir>,
-    tree: Res<Tree>,
+    mut game_state: ResMut<WinState>,
+    mut tree: ResMut<Tree>,
+    mut jover: ResMut<ConnectionState>,
 ) {
     for Command(raw) in command_recive.read() {
         let cmd = raw.split_whitespace().collect::<Vec<_>>();
@@ -206,7 +242,6 @@ fn command_handler(
         }
 
         match cmd[0] {
-            "hello" => term.push("HELLO FROM TERM"),
             "ls" => {
                 let path = cmd.get(1);
 
@@ -237,7 +272,8 @@ fn command_handler(
                 match path {
                     Some(p) => match tree.0[term.cwd.as_str()].get(p) {
                         Some(Item::Directory(p)) => term.cwd = p.to_string(),
-                        Some(_) => term.push("given path is not dir"),
+                        Some(Item::UnAuth) => term.push("you do not have permission"),
+                        Some(Item::File(_)) => term.push("given path is not dir"),
                         None => term.push("dir not found"),
                     },
                     None => term.push("no dir given"),
@@ -258,6 +294,9 @@ fn command_handler(
                                 Item::Directory(_) => {
                                     term.push("given path is not file");
                                 }
+                                Item::UnAuth => {
+                                    term.push("you not have permissions for this action")
+                                }
                             }
                         } else {
                             term.push("file not found");
@@ -265,6 +304,79 @@ fn command_handler(
                     }
                     None => term.push("no file given"),
                 };
+            }
+            "git" => match (cmd.get(1), cmd.get(2)) {
+                (Some(&"revert"), Some(c)) => {
+                    if c == &"Un1ty5uck5" {
+                        term.prev_inputs.insert(PrevCommands::GitRevertCorrect);
+                        term.push("reverted");
+                    } else if c == &"G0d0tG0at " || c == &"Ru5ty" {
+                        term.prev_inputs.insert(PrevCommands::GitRevertWrong);
+                        term.push("reverted");
+                    } else {
+                        term.push("no commit found")
+                    }
+                }
+                (Some(&"revert"), None) => term.push("No commit specified"),
+
+                (Some(&"push"), s) => {
+                    if term.prev_inputs.contains(&PrevCommands::GitRevertCorrect)
+                        || term.prev_inputs.contains(&PrevCommands::GitRevertWrong)
+                    {
+                        match s {
+                            None => term.push("manager's password required"),
+                            Some(&"gitgood") => {
+                                if term.prev_inputs.contains(&PrevCommands::GitRevertCorrect) {
+                                    game_state.0 = true;
+                                } else {
+                                    chat_send.write(ChatMessage::new_relative(
+                                        "Nope you are gone",
+                                        crate::chat::logic::Sender::Ai,
+                                        1.0,
+                                    ));
+                                }
+                                term.push("pushed, commit has been reverted")
+                            } // win cond
+                            Some(_) => term.push("incorrect password"),
+                        };
+                    } else {
+                        term.push("nothing to commit")
+                    }
+                }
+
+                (Some(&"log"), _) => {
+                    term.push("commit: Un1ty5uck5 (HEAD -> main)");
+                    term.push("author: noah");
+
+                    term.push("commit: G0d0tG0at (HEAD -> main)");
+                    term.push("author olivia");
+
+                    term.push("commit: Ru5ty (HEAD -> main)");
+                    term.push("author newbie");
+                }
+
+                (Some(_), _) => term.push("unkown command"),
+                (None, _) => {
+                    term.push("git: no command specified; possible commands: log, push, revert")
+                }
+            },
+            "ssh" => match (cmd.get(1), cmd.get(2)) {
+                (Some(&"john@ai-btb"), Some(&"password")) => {
+                    term.push("ssh initiated");
+                    term.do_ssh(&mut tree);
+                }
+                (Some(&"john@ai-btb"), Some(_)) => term.push("password incorrect"),
+                (Some(&"john@ai-btb"), None) => term.push("Password required"),
+                (Some(_), _) => term.push("Username not found"),
+                _ => term.push("use: ssh user@network password"),
+            },
+            "exit" => {
+                if matches!(term.is_ssh, IsSsh::Yes(_)) {
+                    term.push("exited");
+                    term.do_ssh(&mut tree);
+                } else {
+                    term.push("nothing to exit");
+                }
             }
             "kill_ai" => {
                 chat_send.write(ChatMessage::new_now(
@@ -274,7 +386,11 @@ fn command_handler(
                 term.push("permission denied");
             }
             "mkdir" | "touch" => term.push("Operation not permitted"),
-            _ => term.push("UNKOWN COMMAND"),
+            "help" => {
+                term.push("Possible commands:");
+                term.push("ls, cd, cat, git, ssh, exit")
+            }
+            _ => term.push("command not found"),
         }
     }
 }

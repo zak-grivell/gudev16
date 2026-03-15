@@ -1,45 +1,51 @@
 {
   inputs = {
-    flake-utils.url = "github:numtide/flake-utils";
-    naersk.url = "github:nix-community/naersk";
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    fenix.url = "github:nix-community/fenix";
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    flake-utils.url = "github:numtide/flake-utils";
   };
-  outputs = {
-    self,
-    flake-utils,
-    naersk,
-    nixpkgs,
-    fenix,
-  }:
+
+  outputs =
+    {
+      nixpkgs,
+      flake-utils,
+      rust-overlay,
+      ...
+    }:
     flake-utils.lib.eachDefaultSystem (
-      system: let
-        pkgs = (import nixpkgs) {
-          inherit system;
-          overlays = [fenix.overlays.default];
+      system:
+      let
+        overlays = [ (import rust-overlay) ];
+        pkgs = import nixpkgs { inherit system overlays; };
+
+        toolchain = pkgs.rust-bin.nightly.latest.complete.override {
+          extensions = [ "rust-src" ];
+          targets = [ "wasm32-unknown-unknown" ];
         };
-        naersk' = pkgs.callPackage naersk {};
-        toolchain = pkgs.fenix.combine [
-          (pkgs.fenix.stable.withComponents [
-            "cargo"
-            "clippy"
-            "rust-src"
-            "rustc"
-            "rustfmt"
-          ])
-          pkgs.fenix.targets.wasm32-unknown-unknown.stable.rust-std
-        ];
-      in rec {
-        defaultPackage = naersk'.buildPackage {
-          src = ./.;
-        };
-        devShell = pkgs.mkShell {
-          nativeBuildInputs = with pkgs; [
-            alejandra
-            rust-analyzer
-            trunk
+
+        build-web = pkgs.writeShellScriptBin "build-web" ''
+          trunk build
+          zip -r out.zip dist
+        '';
+      in
+      {
+        devShells.default = pkgs.mkShell {
+          buildInputs = [
             toolchain
+            pkgs.iconv
+            pkgs.wasm-bindgen-cli
+            pkgs.binaryen
+            pkgs.cargo-watch
+            pkgs.cargo-expand
+            pkgs.simple-http-server
+            pkgs.sccache
+            pkgs.trunk
+            build-web
           ];
+          RUST_SRC_PATH = "${toolchain}/lib/rustlib/src/rust/library";
         };
       }
     );

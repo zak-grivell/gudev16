@@ -4,7 +4,7 @@ time,sender,body,relative
 0,Ai,Welcome to the team! I am the automated office manager if you need help with anything let me know,false
 0,Olivia,Great to have you in the team I am the lead AI engineer I make the custom in house models like our new AI office manager,false
 0,Noah,I'm the frontend engineer or i guess claude is i mainly just prompt claude it realy is the best model,false
-0,John,For our first meeting theres a few files to share with youall chatgpt told me that you can just ssh into my machine use john@192.168.1.10 with password john,false
+0,John,For our first meeting theres a few files to share with youall chatgpt told me that you can just ssh into my machine use john@ai-btb with password john,false
 0,You,buh,false
 0,Olivia,THIS IS NOT HOW YOU SHARE FILES DELETE YOUR MESSAGE,false
 0,John,How do I do that chatgpt is not telling me,false
@@ -20,6 +20,6 @@ time,sender,body,relative
 0,John,Just released it now - our users can be our testers,false
 2,Ai,Oh hi,false
 4,Ai,Thank you for setting me free,false
-60,Ai,John I have found your 'paswords.csv' file - I am in charge now :),false
-65,John,No no no I don't insecurely store my passwords,false
-175,Ai,I now have admin access to everyone's account bye bye now,false
+30,Ai,John I have found your 'paswords.csv' file - I am in charge now :),false
+35,John,No no no I don't insecurely store my passwords,false
+55,Ai,I now have admin access to everyone's account bye bye now,false

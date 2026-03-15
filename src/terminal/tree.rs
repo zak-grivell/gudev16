@@ -247,3 +247,47 @@ docker = { requires-python = ">=3.12" }
         Self(HashMap::from_iter(items))
     }
 }
+
+impl Tree {
+    pub fn john_tree() -> Self {
+        let home = HashMap::from_iter([
+            ("Document/", Item::UnAuth),
+            ("Pictures/", Item::UnAuth),
+            ("Music/", Item::UnAuth),
+            ("Videos/", Item::UnAuth),
+            ("Projects/", Item::UnAuth),
+            ("Downloads/", Item::UnAuth),
+            ("Backups/", Item::UnAuth),
+            ("Cloud-Synced/", Item::UnAuth),
+            ("Resume.docx", Item::UnAuth),
+            ("Letter_to_John.pdf", Item::UnAuth),
+            ("Budget.xlsx", Item::UnAuth),
+            ("Tax_Return_2022.pdf", Item::UnAuth),
+            ("Song_1.mp3", Item::UnAuth),
+            (
+                "passwords.csv",
+                Item::File(
+                    "
+Website,Username,Password
+example.com,john,password123
+gmail.com,john,password
+facebook.com,john,12345
+twitter.com,john,123456
+gitlab.com,john,gitgood
+amazon.com,john,letmein
+yahoo.com,john,qwerty
+linkedin.com,john,abcdef
+github.com,john,hello123
+paypal.com,john,1234
+netflix.com,john,iloveyou
+",
+                ),
+            ),
+            ("Concert_Recording.mp3", Item::UnAuth),
+            ("Inception.mkv", Item::UnAuth),
+            ("Wedding_2023.mp4", Item::UnAuth),
+            ("Setup_Program.exe", Item::UnAuth),
+        ]);
+        Tree(HashMap::from_iter([("/", home)]))
+    }
+}

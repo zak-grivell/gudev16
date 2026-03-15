@@ -28,7 +28,7 @@ impl Plugin for TimePlugin {
 
 fn setup(mut commands: Commands) {
     commands.spawn(GameTimer(Timer::new(
-        Duration::from_mins(3),
+        Duration::from_mins(1),
         TimerMode::Repeating,
     )));
 
@@ -76,7 +76,7 @@ fn update_timer_text(timer: Query<&GameTimer>, mut query: Query<&mut Text, With<
     for mut text in &mut query {
         let d = timer.single().unwrap().0.elapsed().as_secs();
 
-        **text = format!("16:{}:{:02}", (d / 60) + 57, d % 60);
+        **text = format!("16:{}:{:02}", (d / 60) + 59, d % 60);
     }
 }
 
@@ -139,7 +139,7 @@ fn spawn_popup(
 
                         // Subtitle
                         card.spawn((
-                            Text::new("Connection to the server was lost."),
+                            Text::new("Connection to the server was lost. You failed to save the world from the impending AI slop"),
                             TextColor(to_color(COLORS.text)),
                         ));
 
